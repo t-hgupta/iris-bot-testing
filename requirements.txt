@@ -1,0 +1,8 @@
+ez_setup
+flask
+pandas
+numpy
+flashtext
+unidecode
+sklearn
+sentence_transformers
