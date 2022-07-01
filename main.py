@@ -34,6 +34,9 @@ app = Flask(__name__)
 #Authentication
 # client = QnAMakerClient(endpoint=authoring_endpoint, credentials=CognitiveServicesCredentials(subscription_key))
 
+@app.route("/")
+def hello():
+    return "hello"
 
 @app.route("/", methods = ['GET'])
 def runModel():
