@@ -6,3 +6,4 @@ flashtext
 unidecode
 sklearn
 sentence_transformers
+requests

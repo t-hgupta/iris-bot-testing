@@ -6,11 +6,6 @@
 # pip freeze > requirements.txt
 
 
-from crypt import methods
-from urllib import response
-from wsgiref import headers
-
-
 from requests import request
 import requests
 from processing import preprocess_text
