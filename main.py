@@ -36,9 +36,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "hello"
+    return 'hello'
 
-@app.route("/", methods = ['GET'])
+@app.route("/run", methods = ['GET'])
 def runModel():
     Data_FC = loadDataset('../Final_Code/Data_textual/Data_FC.CSV', 'csv')
     Data_G = loadDataset('../Final_Code/Data_textual/Data_G.CSV', 'csv')
