@@ -5,6 +5,8 @@ import re
 def preprocess_text(text, flag):
     text = str(text)
     
+    #Remove PII
+
     #remove image link and url associated with teams
     text = re.sub(r'\[\S+]', '', text, flags=re.MULTILINE)
     text = re.sub(r'https\S+teams\S+', '', text, flags=re.MULTILINE)
