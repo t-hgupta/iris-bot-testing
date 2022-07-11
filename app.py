@@ -24,22 +24,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 @app.route("/")
 def hello():
-    headers = {
-        "Ocp-Apim-Subscription-Key": request.headers["KB_Key"]
-    }
-    
-    # get all data of KB
-    Data_KB = pd.DataFrame(get_QnA(headers, request.headers["KB_ID"], request.headers["KB_END_POINT"]))
-
-    #delete all question in KB
-    # delete_QnA(list(Data_KB['id']), headers, request.headers["KB_ID"], request.headers["KB_END_POINT"])
-
-    # Add iris Bot KB data
-    Data_KB = loadDataset('../Data_textual/KnowledgeBase.xlsx', 'excel')
-    add_QnA(Data_KB, headers, request.headers["KB_ID"], request.headers["KB_END_POINT"])
-
-    publish_kb(headers, request.headers["KB_ID"], request.headers["KB_END_POINT"])
-    return 'Updated with Iris Bot KB'
+    return "Hey, It's working"
 
 # Get request for offline data
 @app.route("/run", methods = ['GET'])
@@ -99,6 +84,29 @@ def runModel():
 
 
 ###post request
+
+#######################-----POST request to add file with Question and Answer-------##################
+
+@app.route("/addFile", methods = ['POST'])
+def addFile():
+    headers = {
+        "Ocp-Apim-Subscription-Key": request.headers["KB_Key"]
+    }
+    
+    # get all data of KB
+    Data_KB = pd.DataFrame(get_QnA(headers, request.headers["KB_ID"], request.headers["KB_END_POINT"]))
+
+    # Add iris Bot KB data
+    add_QnA(Data_KB, headers, request.headers["KB_ID"], request.headers["KB_END_POINT"])
+
+    publish_kb(headers, request.headers["KB_ID"], request.headers["KB_END_POINT"])
+    
+    return 'Added file Data in knowledge Base'
+
+
+
+#######################-----POST request to update team channel Data-------##################
+
 @app.route("/", methods = ['POST'])
 def post_request():
     
@@ -162,6 +170,32 @@ def post_request():
     publish_kb(headers, request.headers["KB_ID"], request.headers["KB_END_POINT"])
 
     return "Data is updated"
+
+#######################-----POST request for new Message on team channel-------##################
+
+@app.route("/newMessage", methods = ['POST'])
+def newMessage():
+    
+    #get data
+    Data = pd.DataFrame(request.get_json())
+    # Data = loadDataset('../Data_textual/Data_FC.CSV', 'csv')
+
+    #merge reply
+    Data = merge_reply(Data)
+
+    # prepare data for deepask api
+    Data_DAA = pd.DataFrame(columns=['Paragraph'])
+    for i in Data_DAA.index:
+        Data_DAA.loc[i] = preprocess_text(' '.join([Data.at[i, 'Question'], Data.at[i, 'Reply']]), 0)
+
+    # generalize question and answer with the help of existing model
+
+
+    # Create Database of unanswered question and new question
+    # columns = ["messageId", "message", "isAnswered", "isSent"]
+    
+    return "new message added"
+
 
 if __name__ == "__main__":
     app.run(debug = True)
