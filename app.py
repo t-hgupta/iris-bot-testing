@@ -1,5 +1,6 @@
 # pip freeze > requirements.txt
 
+
 from processing import preprocess_text
 from LoadDataset import loadDataset
 from mergeReply import merge_reply, merge_df
@@ -107,8 +108,8 @@ def addFile():
 
 #######################-----POST request to update team channel Data-------##################
 
-@app.route("/", methods = ['POST'])
-def post_request():
+@app.route("/teamData", methods = ['POST'])
+def teamData():
     
     #get data
     Data = pd.DataFrame(request.get_json())
@@ -191,10 +192,44 @@ def newMessage():
     # generalize question and answer with the help of existing model
 
 
+    # Seach for most similar question in Knowledge Base.
+    
+    # if similar refer to iris bot.
+
+    # else add to Database
     # Create Database of unanswered question and new question
-    # columns = ["messageId", "message", "isAnswered", "isSent"]
+    # columns = ["messageId", "Question", "Answer" , "isAnswered", "isSent"]
     
     return "new message added"
+
+
+
+#######################-----POST request to check unanswered questions-------##################
+
+@app.route('/checkQuestions', methods=['POST'])
+def checkQuestions():
+    # Retrieve all tha unaswered questions
+
+    # if isAnswered 1 then update to Knowledge Base
+
+    # else check isSent if 1 then continue
+
+    #else send the questions to SME and mark it 1.
+
+    return "checked"
+
+
+
+#######################-----POST request to update unanswered questions-------##################
+
+@app.route('/updateAnswer', methods=['POST'])
+def updateAnswer():
+
+    # Request body contains index, questions and answers
+
+    # add it to storage
+
+    return "updated"
 
 
 if __name__ == "__main__":
