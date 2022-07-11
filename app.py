@@ -118,7 +118,7 @@ def post_request():
 
     # prepare data for deepask api
     Data_DAA = pd.DataFrame(columns=['Paragraph'])
-    for i in range(len(Data)):
+    for i in Data_DAA.index:
         Data_DAA.loc[i] = preprocess_text(' '.join([Data.at[i, 'Question'], Data.at[i, 'Reply']]), 0)
 
     # generalize question and answer with the help of existing model

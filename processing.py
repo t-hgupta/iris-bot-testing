@@ -2,6 +2,7 @@ from flashtext import KeywordProcessor
 import unidecode
 import re
 
+# Function to pre-process text
 def preprocess_text(text, flag):
     text = str(text)
     
